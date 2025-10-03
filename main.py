@@ -1,9 +1,19 @@
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from yt_summary_agent import fetch_youtube_transcript, summarize_video, summarize_text_with_openai
 
 
 app = FastAPI(title="YouTube Transcript/Summary Service")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 
 class TranscriptResponse(BaseModel):
